@@ -35,7 +35,9 @@ jobs:
 
       - name: Compress build output with zip
         run: |
-          zip -j monitor.zip dist/*
+          cd dist
+          zip -r ../monitor.zip .
+          cd ..
           sha256sum monitor.zip
 
       - name: Attest build provenance
