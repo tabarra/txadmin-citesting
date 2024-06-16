@@ -62,9 +62,7 @@ jobs:
         id: build_changelog
         uses: release-drafter/release-drafter@v6
         with:
-          # tag: ${{ github.ref }}
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          commitMode: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: print this crap
         run: |
