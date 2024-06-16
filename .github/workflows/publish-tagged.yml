@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
+      attestations: write
 
     steps:
       - name: Checkout repository
@@ -36,11 +38,21 @@ jobs:
           cd dist && zip -r ../monitor.zip .
           sha256sum ../monitor.zip > ../monitor.zip.sha256
 
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: monitor.zip
+
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@{latest-release}
+
       - name: Create and Upload Release
         uses: softprops/action-gh-release@v2
         with:
           # draft: true
-          generate_release_notes: true
+          # generate_release_notes: true
+          body: ${{ github.workspace }}-CHANGELOG.txt
           fail_on_unmatched_files: true
           prerelease: ${{ env.TX_IS_PRERELEASE }}
           files: |
