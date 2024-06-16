@@ -4,7 +4,7 @@
         "humanizer_language": "pt"
     },
     "restarter": {
-        "start_timeout": "não iniciou a tempo",
+        "start_timeout": "não iniciou a tempo!",
         "crash_detected": "crash detectado",
         "hang_detected": "congelamento detectado",
         "partial_hang_warn": "Devido a um congelamento parcial, este servidor será reiniciado em 1 minuto. Por favor, desconecte-se agora.",
