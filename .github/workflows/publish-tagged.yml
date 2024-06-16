@@ -20,28 +20,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Use Node.js 20
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      # - name: Download all modules
-      #   run: npm ci
+      - name: Download all modules
+        run: npm ci
 
-      # - name: Build project
-      #   run: |
-      #     npm run build
-      #     cat .github/.cienv >> $GITHUB_ENV
-
-      - name: pretend build project
+      - name: Build project
         run: |
-          mv docs dist # FIXME: Temporary test to speed up stuff
-          echo "TX_IS_PRERELEASE=false" > $GITHUB_ENV
+          npm run build
+          cat .github/.cienv >> $GITHUB_ENV
+
+      # - name: pretend build project
+      #   run: |
+      #     mv docs dist # FIXME: Temporary test to speed up stuff
+      #     echo "TX_IS_PRERELEASE=false" > $GITHUB_ENV
 
       - name: Compress build output with zip
         run: |
           zip -r monitor.zip dist
-          sha256sum monitor.zip > monitor.zip.sha256
+          sha256sum monitor.zip
 
       - name: Attest build provenance
         id: attest_build_provenance
@@ -54,7 +54,4 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: ${{ env.TX_IS_PRERELEASE }}
-          files: |
-            monitor.zip
-            monitor.zip.sha256
-            ${{steps.attest_build_provenance.outputs.bundle-path}}
+          files: monitor.zip
