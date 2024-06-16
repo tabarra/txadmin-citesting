@@ -25,18 +25,23 @@ jobs:
         with:
           node-version: 20
 
-      - name: Download all modules
-        run: npm ci
+      # - name: Download all modules
+      #   run: npm ci
 
-      - name: Build project
+      # - name: Build project
+      #   run: |
+      #     npm run build
+      #     cat .github/.cienv >> $GITHUB_ENV
+
+      - name: pretend build project
         run: |
-          npm run build
-          cat .github/.cienv >> $GITHUB_ENV
+          mv docs dist # FIXME: Temporary test to speed up stuff
+          echo "TX_IS_PRERELEASE=false" > $GITHUB_ENV
 
       - name: Compress build output with zip
         run: |
-          cd dist && zip -r ../monitor.zip .
-          sha256sum ../monitor.zip > ../monitor.zip.sha256
+          zip -r monitor.zip dist
+          sha256sum monitor.zip > monitor.zip.sha256
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v1
@@ -52,7 +57,7 @@ jobs:
         with:
           # draft: true
           # generate_release_notes: true
-          body: ${{ github.workspace }}-CHANGELOG.txt
+          body: ${{steps.build_changelog.outputs.changelog}}
           fail_on_unmatched_files: true
           prerelease: ${{ env.TX_IS_PRERELEASE }}
           files: |
