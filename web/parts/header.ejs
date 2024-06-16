@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="<%= basePath %>">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="txAdmin - remotely Manage & Monitor your GTA5 FiveM Server">
+    <meta name="author" content="André Tabarra">
+    <title>txAdmin</title>
+    <!--style-->
+    <link rel="stylesheet" href="<%= resourcePath %>css/simple-line-icons.css?txVer=<%= txAdminVersion %>">
+    <link rel="stylesheet" href="<%= resourcePath %>css/coreui.min.css?txVer=<%= txAdminVersion %>">
+    <link rel="stylesheet" href="<%= resourcePath %>css/jquery-confirm.min.css?txVer=<%= txAdminVersion %>">
+    <link rel="stylesheet" href="<%= resourcePath %>css/txAdmin.css?txVer=<%= txAdminVersion %>">
+    <link rel="stylesheet" href="<%= resourcePath %>css/dark.css?txVer=<%= txAdminVersion %>">
+    <link rel="shortcut icon" href="img/favicon_default.png" type="image/png" id="favicon" />
+    <style>
+        .zapAdContainer {
+            padding-left: 1em;
+            display: flex;
+            color: unset !important;
+        }
+        .zapLogo {
+            height: 26px;
+            margin-top: auto;
+            margin-bottom: auto;
+        } 
+        .zapText {
+            font-size: 0.85em;
+            font-weight: 700;
+            padding-left: 8px;
+            align-self: center;
+            text-transform: initial;
+        }
+        .zapTextIcon {
+            margin-top: -0.25em;
+            width: 0.7rem !important;
+            height: 0.7rem !important;
+            font-size: 0.7rem !important;
+        }
+    </style>
+    <!-- injected consts -->
+    <script><%- jsInjection %></script>
+</head>
+
+<body class="c-app <%= uiTheme %>">
+    <!-- Center Content -->
+    <div class="c-wrapper c-fixed-components">
+
+        <!-- Actual Body -->
+        <div class="c-body">
+            <main class="c-main thin-scroll" id="mainbody">
+                <div class="container-fluid" style="padding-left: 15px; padding-right: 15px;">
+                    <div class="fade-in">
+<!-- Begin Page Content -->

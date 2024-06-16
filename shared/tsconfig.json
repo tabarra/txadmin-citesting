@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        /* Truncated compiler options to list only relevant options */
+        "declaration": true,
+        "declarationMap": true,
+        "composite": true,
+
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "outDir": "../tmp_shared_tsc",
+
+        "rootDir": "../",
+        "baseUrl": "./",
+        "paths": {
+            "@core/*": ["../core/*"],
+            "@locale/*": ["../locale/*"],
+        },
+    },
+    "include": ["../locale/*.json", "./*"],
+    "references": [
+        { "path": "../core" }
+    ]
+}

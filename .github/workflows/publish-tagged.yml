@@ -1,0 +1,45 @@
+name: Create Tagged Release Prod
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+
+jobs:
+  build:
+    name: "Build Changelog & Release Prod"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download all modules
+        run: npm ci
+
+      - name: Build project
+        run: |
+          npm run build -- --tag ${{ github.ref }}
+          cat .github/.cienv >> $GITHUB_ENV
+
+      - name: Compress build output with zip
+        run: |
+          cd dist && zip -r ../monitor.zip .
+          sha1sum ../monitor.zip > ../monitor.zip.sha1
+
+      - name: Create and Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          fail_on_unmatched_files: true
+          prerelease: ${{ env.TX_IS_PRERELEASE }}
+          files: |
+            monitor.zip
+            monitor.zip.sha1
