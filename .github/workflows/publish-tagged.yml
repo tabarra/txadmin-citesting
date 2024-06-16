@@ -34,14 +34,15 @@ jobs:
       - name: Compress build output with zip
         run: |
           cd dist && zip -r ../monitor.zip .
-          sha1sum ../monitor.zip > ../monitor.zip.sha1
+          sha256sum ../monitor.zip > ../monitor.zip.sha256
 
       - name: Create and Upload Release
         uses: softprops/action-gh-release@v2
         with:
-          draft: true
+          # draft: true
+          generate_release_notes: true
           fail_on_unmatched_files: true
           prerelease: ${{ env.TX_IS_PRERELEASE }}
           files: |
             monitor.zip
-            monitor.zip.sha1
+            monitor.zip.sha256
