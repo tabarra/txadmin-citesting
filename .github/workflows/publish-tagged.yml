@@ -61,12 +61,12 @@ jobs:
       - name: "Build Changelog"
         id: build_changelog
         uses: release-drafter/release-drafter@v6
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: print this crap
         run: |
-          echo ${{steps.build_changelog.outputs.body}}
+          echo -e "${{steps.build_changelog.outputs.body}}"
 
       # - name: Create and Upload Release
       #   uses: softprops/action-gh-release@v2
