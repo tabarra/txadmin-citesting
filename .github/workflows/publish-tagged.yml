@@ -33,11 +33,6 @@ jobs:
           npm run build
           cat .github/.cienv >> $GITHUB_ENV
 
-      # - name: pretend build project
-      #   run: |
-      #     mv docs dist # FIXME: Temporary test to speed up stuff
-      #     echo "TX_IS_PRERELEASE=false" > $GITHUB_ENV
-
       - name: Compress build output with zip
         run: |
           zip -r monitor.zip dist
