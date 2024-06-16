@@ -33,50 +33,52 @@ jobs:
       #     npm run build
       #     cat .github/.cienv >> $GITHUB_ENV
 
-      - name: pretend build project
-        run: |
-          mv docs dist # FIXME: Temporary test to speed up stuff
-          echo "TX_IS_PRERELEASE=false" > $GITHUB_ENV
+      # - name: pretend build project
+      #   run: |
+      #     mv docs dist # FIXME: Temporary test to speed up stuff
+      #     echo "TX_IS_PRERELEASE=false" > $GITHUB_ENV
 
-      - name: Compress build output with zip
-        run: |
-          zip -r monitor.zip dist
-          sha256sum monitor.zip > monitor.zip.sha256
+      # - name: Compress build output with zip
+      #   run: |
+      #     zip -r monitor.zip dist
+      #     sha256sum monitor.zip > monitor.zip.sha256
 
-      - name: Attest build provenance
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-path: monitor.zip
+      # - name: Attest build provenance
+      #   id: attest_build_provenance
+      #   uses: actions/attest-build-provenance@v1
+      #   with:
+      #     subject-path: monitor.zip
+
+      # - name: "Build Changelog"
+      #   id: build_changelog
+      #   uses: mikepenz/release-changelog-builder-action@v4
+      #   with:
+      #     toTag: ${{ github.ref }}
+      #     commitMode: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Build Changelog"
         id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v4
+        uses: release-drafter/release-drafter@v6
         with:
-          toTag: ${{ github.ref }}
+          # tag: ${{ github.ref }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
           commitMode: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: print this crap
         run: |
           echo ${{steps.build_changelog.outputs.body}}
 
-      # - name: "Build Changelog"
-      #   id: build_changelog
-      #   uses: release-drafter/release-drafter@v6
+      # - name: Create and Upload Release
+      #   uses: softprops/action-gh-release@v2
       #   with:
-      #     # tag: ${{ github.ref }}
-      #     # token: ${{ secrets.GITHUB_TOKEN }}
-      #     commitMode: true
-
-      - name: Create and Upload Release
-        uses: softprops/action-gh-release@v2
-        with:
-          # draft: true
-          # generate_release_notes: true
-          body: ${{steps.build_changelog.outputs.body}}
-          fail_on_unmatched_files: true
-          prerelease: ${{ env.TX_IS_PRERELEASE }}
-          files: |
-            monitor.zip
-            monitor.zip.sha256
+      #     # draft: true
+      #     # generate_release_notes: true
+      #     body: ${{steps.build_changelog.outputs.body}}
+      #     fail_on_unmatched_files: true
+      #     prerelease: ${{ env.TX_IS_PRERELEASE }}
+      #     files: |
+      #       monitor.zip
+      #       monitor.zip.sha256
+      #       ${{steps.attest_build_provenance.outputs.bundle-path}}
