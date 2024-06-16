@@ -55,6 +55,8 @@ jobs:
           # tag: ${{ github.ref }}
           # token: ${{ secrets.GITHUB_TOKEN }}
           commitMode: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: "Build Changelog"
       #   id: build_changelog
