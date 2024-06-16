@@ -1,4 +1,4 @@
-name: Create Tagged Release Prod
+name: Publish Tagged Build
 
 on:
   push:
@@ -9,6 +9,8 @@ jobs:
   build:
     name: "Build Changelog & Release Prod"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
