@@ -26,7 +26,7 @@ jobs:
 
       - name: Build project
         run: |
-          npm run build -- --tag ${{ github.ref }}
+          npm run build
           cat .github/.cienv >> $GITHUB_ENV
 
       - name: Compress build output with zip

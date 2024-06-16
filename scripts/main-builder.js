@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import child_process from 'node:child_process';
-import minimist from 'minimist';
 import { SemVer } from 'semver';
 import chokidar from 'chokidar';
 import debounce from 'lodash/debounce.js';
@@ -14,11 +13,12 @@ const txLicenseBannerFile = licenseBanner();
 
 
 /**
- * Extracts the version from the tag or GITHUB_REF.
+ * Extracts the version from the GITHUB_REF env var and detects if pre-release
  */
-const getPublishVersion = (tagArg, isOptional) => {
+const getPublishVersion = (isOptional) => {
+    const workflowRef = process.env.GITHUB_REF;
     try {
-        if (!tagArg) {
+        if (!workflowRef) {
             if (isOptional) {
                 return {
                     txVersion: '9.9.9-dev',
@@ -29,7 +29,7 @@ const getPublishVersion = (tagArg, isOptional) => {
                 throw new Error('No --tag found.');
             }
         }
-        const refRemoved = tagArg.replace(/^(refs\/tags\/)?v/, '');
+        const refRemoved = workflowRef.replace(/^(refs\/tags\/)?v/, '');
         const parsedVersion = new SemVer(refRemoved);
         const isPreRelease = parsedVersion.prerelease.length > 0;
         const potentialExpiration = new Date().setUTCHours(24 * config.preReleaseExpirationDays, 0, 0, 0);
@@ -292,22 +292,13 @@ const runPublishTask = (txVersion, preReleaseExpiration) => {
 /**
  * Init parts
  */
-const upperArgs = minimist(
-    process.argv.slice(2),
-    { '--': true }
-);
-const subArgs = minimist(
-    upperArgs['--'],
-    { string: ['tag'] }
-);
-
-const taskType = upperArgs._[0] ?? 'dev';
+const taskType = process.argv[2];
 if (taskType === 'dev') {
     process.stdout.write('.\n'.repeat(80) + '\x1B[2J\x1B[H');
-    const { txVersion, preReleaseExpiration } = getPublishVersion(subArgs.tag, true);
+    const { txVersion, preReleaseExpiration } = getPublishVersion(true);
     runDevTask(txVersion, preReleaseExpiration);
 } else if (taskType === 'publish') {
-    const { txVersion, isPreRelease, preReleaseExpiration } = getPublishVersion(subArgs.tag, false);
+    const { txVersion, isPreRelease, preReleaseExpiration } = getPublishVersion(false);
     //Save CI env file
     fs.writeFileSync('.github/.cienv', `TX_IS_PRERELEASE=${isPreRelease}\n`);
 

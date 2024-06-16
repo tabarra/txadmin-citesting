@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "cd ../ && node scripts/main-builder.js publish --",
-    "dev": "cd ../ && node scripts/main-builder.js dev --",
+    "build": "cd ../ && node scripts/main-builder.js publish",
+    "dev": "cd ../ && node scripts/main-builder.js dev",
     "test": "vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint ./**",
