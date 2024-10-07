@@ -10,7 +10,6 @@ if (process.env.CI) {
     const citizenRoot = path.join(process.cwd(), 'alpine/opt/cfx-server/');
     vi.stubEnv('TXADMIN_DEV_FXSERVER_PATH', citizenRoot);
 }
-console.dir(process.env);
 
 
 // Stubbing globals
