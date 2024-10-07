@@ -1,7 +1,7 @@
 {
     "$meta": {
         "label": "Portuguese",
-        "humanizer_language": "pt"
+        "humanizer_language": "zzzzz"
     },
     "restarter": {
         "start_timeout": "não iniciou a tempo",
