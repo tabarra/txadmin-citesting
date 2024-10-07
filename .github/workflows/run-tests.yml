@@ -35,4 +35,4 @@ jobs:
       - name: Run Tests for ${{ matrix.workspace }}
         env:
             CI: true
-        run: npm run test:ci --workspace=${{ matrix.workspace }}
+        run: npm run test --workspace=${{ matrix.workspace }}
