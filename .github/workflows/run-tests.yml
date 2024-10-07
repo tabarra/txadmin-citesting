@@ -31,3 +31,6 @@ jobs:
         env:
           CI: true
         run: npm run test --workspaces
+
+      - name: Indicate All Tests Passed
+        run: echo "All tests passed!" && echo -e "\033[0;32mAll tests passed!\033[0m"
