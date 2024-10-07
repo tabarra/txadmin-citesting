@@ -104,6 +104,3 @@ ConVar usage **example** for different port and profile:
 - [Announcement Sound](https://freesound.org/people/IENBA/sounds/545495/) made by __IENBA__ is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/);
 - [Message Sound](https://freesound.org/people/Divinux/sounds/198414/) made by __Divinux__ is licensed under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/);
 - Especial thanks to everyone that contributed to this project, especially the very fine Discord folks that provide support for others;
-
-
-Change5

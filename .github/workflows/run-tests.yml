@@ -1,0 +1,38 @@
+name: Run Tests for Workspaces
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  run-tests:
+    name: "Run Unit Testing"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        # Define the workspace names here
+        workspace: [core, panel, nui, shared]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download all modules
+        run: npm ci
+
+      - name: Run Tests for ${{ matrix.workspace }}
+        env:
+            CI: true
+        run: npm run test:ci --workspace=${{ matrix.workspace }}
