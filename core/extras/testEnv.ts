@@ -6,6 +6,9 @@ vi.stubEnv('TERM', 'xterm-256color');
 vi.stubEnv('FORCE_COLOR', '3');
 vi.stubEnv('TXADMIN_DEV_SRC_PATH', path.join(process.cwd(), '..'));
 vi.stubEnv('TXADMIN_DEV_VITE_URL', 'http://localhost:40122');
+if (process.env.CI) {
+    vi.stubEnv('TXADMIN_DEV_FXSERVER_PATH', '/root/server');
+}
 
 
 // Stubbing globals
